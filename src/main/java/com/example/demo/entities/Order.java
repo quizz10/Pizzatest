@@ -4,10 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Arrays;
-import java.util.List;
-import com.example.demo.entities.Pizza;
-import com.example.demo.repositories.PizzaRepository;
 
 @Entity
 public class Order {
@@ -20,20 +16,13 @@ public class Order {
     private int price;
     private String order;
 
-    //private PizzaRepository pizza;
-
-    public Order() {
+    public Order(Order order) {
     }
 
-    public Order(String phonenumber, String order) {
+    public Order(String phonenumber, int price, String order) {
         this.phonenumber = phonenumber;
+        this.price = price;
         this.order = order;
-//        List<String> pizzaId = Arrays.asList(order.split(","));
-//        for (int i = 0; i < pizzaId.size(); i++) {
-//            for(String id: pizzaId){
-//                price+=pizza.getById(Long.parseLong(id)).getPrice();
-//            }
-//        }
     }
 
     public long getId() {return id;}
@@ -46,13 +35,9 @@ public class Order {
 
     public int getPrice() {return price;    }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
+    public void setPrice(int price) {this.price = price;    }
 
     public String getOrder() {return order;    }
 
-    public void setOrder(String order) {
-        this.order = order;
-    }
+    public void setOrder(String order) {this.order = order;    }
 }

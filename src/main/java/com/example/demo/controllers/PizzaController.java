@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
+import com.example.demo.entities.Order;
 import com.example.demo.entities.Pizza;
+import com.example.demo.repositories.OrderRepository;
 import com.example.demo.repositories.PizzaRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +14,15 @@ import java.util.stream.Collectors;
 public class PizzaController {
 
     private final PizzaRepository pizzaRepository;
-    private List<Pizza> specificPizza;
 
-    public PizzaController(PizzaRepository pizzaRepository) {
+    private final OrderRepository orderRepository;
+
+
+    public PizzaController(PizzaRepository pizzaRepository, OrderRepository orderRepository) {
         this.pizzaRepository = pizzaRepository;
+        this.orderRepository = orderRepository;
     }
+
 
     @GetMapping(value = "/pizzas/{id}")
     public @ResponseBody
@@ -75,4 +81,15 @@ public class PizzaController {
         pizzaRepository.save(modifiedPizza);
     }
 
+    @PostMapping(value = "/orderpizza/{pizzaorder}")
+    public void pizzaorder(@PathVariable String pizzaorder){
+        String[] split = pizzaorder.split("-");
+        String[] pizzas = split[1].split(",");
+        int price = 0;
+        for (int i = 0; i < pizzas.length; i++) {
+            price += pizzaRepository.getById(Long.parseLong(pizzas[i])).getPrice();
+        }
+        orderRepository.save(new Order(split[0], price, split[1]));
+    }
 }
+
