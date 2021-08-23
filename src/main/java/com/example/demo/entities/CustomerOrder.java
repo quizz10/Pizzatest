@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class Order2 {
+public class CustomerOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,10 +16,10 @@ public class Order2 {
     private int price;
     private String orders;
 
-    public Order2() {
+    public CustomerOrder() {
     }
 
-    public Order2(String phonenumber, int price, String orders) {
+    public CustomerOrder(String phonenumber, int price, String orders) {
         this.phonenumber = phonenumber;
         this.price = price;
         this.orders = orders;
@@ -63,8 +63,8 @@ public class Order2 {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Order2 order2 = (Order2) o;
-        return id == order2.id && price == order2.price && Objects.equals(phonenumber, order2.phonenumber) && Objects.equals(orders, order2.orders);
+        CustomerOrder customerOrder = (CustomerOrder) o;
+        return id == customerOrder.id && price == customerOrder.price && Objects.equals(phonenumber, customerOrder.phonenumber) && Objects.equals(orders, customerOrder.orders);
     }
 
     @Override

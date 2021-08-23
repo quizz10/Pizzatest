@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.entities.Order2;
+import com.example.demo.entities.CustomerOrder;
 import com.example.demo.entities.Pizza;
 import com.example.demo.repositories.OrderRepository;
 import com.example.demo.repositories.PizzaRepository;
@@ -43,23 +43,23 @@ public class PizzaController {
 
 
 
-    @PutMapping(value = "/addpizza/{newpizza}")
-    public void addPizza(@PathVariable String newpizza) {
-        String[] split = newpizza.split("-");
+    @PutMapping(value = "/addpizza/{newPizza}")
+    public void addPizza(@PathVariable String newPizza) {
+        String[] split = newPizza.split("-");
         pizzaRepository.save(new Pizza(split[0], Integer.parseInt(split[1]), split[2]));
     }
 
-    @GetMapping(value = "/search/{searchstring}")
-    public List<Pizza> searchInPizzas(@PathVariable String searchstring) {
+    @GetMapping(value = "/search/{searchString}")
+    public List<Pizza> searchInPizzas(@PathVariable String searchString) {
 
         return pizzaRepository.findAll().stream()
-                .filter(p -> p.getIngredients().contains(searchstring))
+                .filter(p -> p.getIngredients().contains(searchString))
                 .collect(Collectors.toList());
     }
 
-    @PatchMapping(value = "/editpizza/{changestring}")
-    public void changePizza(@PathVariable String changestring) {
-        String[] urlSplit = changestring.split("-");
+    @PatchMapping(value = "/editpizza/{changeString}")
+    public void changePizza(@PathVariable String changeString) {
+        String[] urlSplit = changeString.split("-");
         Pizza modifiedPizza = pizzaRepository.getById(Long.parseLong(urlSplit[0]));
 
         String[] ingredientsSplit = modifiedPizza.getIngredients().split(",");
@@ -81,20 +81,20 @@ public class PizzaController {
         pizzaRepository.save(modifiedPizza);
     }
 
-    @PostMapping(value = "/orderpizza/{pizzaorder}")
-    public void pizzaorder(@PathVariable String pizzaorder){
-        String[] split = pizzaorder.split("-");
-        String[] pizzas = split[1].split(",");
-        String[] pizzaArray = new String[pizzas.length];
+    @PostMapping(value = "/orderpizza/{pizzaOrder}")
+    public void pizzaorder(@PathVariable String pizzaOrder){
+        String[] urlSplit = pizzaOrder.split("-");
+        String[] orderedPizzas = urlSplit[1].split(",");
+        String[] pizzaArray = new String[orderedPizzas.length];
         StringBuffer pizza = new StringBuffer();
         int price = 0;
-        for (int i = 0; i < pizzas.length; i++) {
-            price += pizzaRepository.getById(Long.parseLong(pizzas[i])).getPrice();
-            pizzaArray[i] = pizzaRepository.getById(Long.parseLong(pizzas[i])).getName();
+        for (int i = 0; i < orderedPizzas.length; i++) {
+            price += pizzaRepository.getById(Long.parseLong(orderedPizzas[i])).getPrice();
+            pizzaArray[i] = pizzaRepository.getById(Long.parseLong(orderedPizzas[i])).getName();
             pizza.append(pizzaArray[i]+", ");
         }
-        String orderedPizzas = pizza.toString();
-        orderRepository.save(new Order2(split[0], price, orderedPizzas.substring(0, orderedPizzas.length()-2)));
+        String pizzas = pizza.toString();
+        orderRepository.save(new CustomerOrder(urlSplit[0], price, pizzas.substring(0, pizzas.length()-2)));
     }
 }
 
