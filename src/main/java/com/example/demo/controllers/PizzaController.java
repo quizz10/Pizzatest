@@ -82,7 +82,7 @@ public class PizzaController {
     }
 
     @PostMapping(value = "/orderpizza/{pizzaOrder}")
-    public void pizzaorder(@PathVariable String pizzaOrder){
+    public void pizzaOrder(@PathVariable String pizzaOrder){
         String[] urlSplit = pizzaOrder.split("-");
         String[] orderedPizzas = urlSplit[1].split(",");
         String[] pizzaArray = new String[orderedPizzas.length];
