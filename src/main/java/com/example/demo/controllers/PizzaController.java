@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.entities.Order;
+import com.example.demo.entities.Order2;
 import com.example.demo.entities.Pizza;
 import com.example.demo.repositories.OrderRepository;
 import com.example.demo.repositories.PizzaRepository;
@@ -85,11 +85,16 @@ public class PizzaController {
     public void pizzaorder(@PathVariable String pizzaorder){
         String[] split = pizzaorder.split("-");
         String[] pizzas = split[1].split(",");
+        String[] pizzaArray = new String[pizzas.length];
+        StringBuffer pizza = new StringBuffer();
         int price = 0;
         for (int i = 0; i < pizzas.length; i++) {
             price += pizzaRepository.getById(Long.parseLong(pizzas[i])).getPrice();
+            pizzaArray[i] = pizzaRepository.getById(Long.parseLong(pizzas[i])).getName();
+            pizza.append(pizzaArray[i]+", ");
         }
-        orderRepository.save(new Order(split[0], price, split[1]));
+        String orderedPizzas = pizza.toString();
+        orderRepository.save(new Order2(split[0], price, orderedPizzas.substring(0, orderedPizzas.length()-2)));
     }
 }
 
