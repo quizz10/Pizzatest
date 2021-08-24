@@ -15,12 +15,9 @@ public class PizzaController {
 
     private final PizzaRepository pizzaRepository;
 
-    private final OrderRepository orderRepository;
 
-
-    public PizzaController(PizzaRepository pizzaRepository, OrderRepository orderRepository) {
+    public PizzaController(PizzaRepository pizzaRepository) {
         this.pizzaRepository = pizzaRepository;
-        this.orderRepository = orderRepository;
     }
 
 
@@ -40,7 +37,6 @@ public class PizzaController {
     public List<Pizza> pizzas() {
         return pizzaRepository.findAll();
     }
-
 
 
     @PutMapping(value = "/addpizza/{newPizza}")
@@ -73,7 +69,7 @@ public class PizzaController {
         }
 
         for (int i = 0; i < ingredientsSplit.length; i++) {
-                ingredientsBuffer.append(ingredientsSplit[i]);
+            ingredientsBuffer.append(ingredientsSplit[i]);
         }
         String newIngredients = ingredientsBuffer.toString();
 
@@ -81,20 +77,20 @@ public class PizzaController {
         pizzaRepository.save(modifiedPizza);
     }
 
-    @PostMapping(value = "/orderpizza/{pizzaOrder}")
-    public void pizzaOrder(@PathVariable String pizzaOrder){
-        String[] urlSplit = pizzaOrder.split("-");
-        String[] orderedPizzas = urlSplit[1].split(",");
-        String[] pizzaArray = new String[orderedPizzas.length];
-        StringBuffer pizza = new StringBuffer();
-        int price = 0;
-        for (int i = 0; i < orderedPizzas.length; i++) {
-            price += pizzaRepository.getById(Long.parseLong(orderedPizzas[i])).getPrice();
-            pizzaArray[i] = pizzaRepository.getById(Long.parseLong(orderedPizzas[i])).getName();
-            pizza.append(pizzaArray[i]+", ");
-        }
-        String pizzas = pizza.toString();
-        orderRepository.save(new CustomerOrder(urlSplit[0], price, pizzas.substring(0, pizzas.length()-2)));
+//    @PostMapping(value = "/orderpizza/{pizzaOrder}")
+//    public void pizzaOrder(@PathVariable String pizzaOrder) {
+//        String[] urlSplit = pizzaOrder.split("-");
+//        String[] orderedPizzas = urlSplit[1].split(",");
+//        String[] pizzaArray = new String[orderedPizzas.length];
+//        StringBuffer pizza = new StringBuffer();
+//        int price = 0;
+//        for (int i = 0; i < orderedPizzas.length; i++) {
+//            price += pizzaRepository.getById(Long.parseLong(orderedPizzas[i])).getPrice();
+//            pizzaArray[i] = pizzaRepository.getById(Long.parseLong(orderedPizzas[i])).getName();
+//            pizza.append(pizzaArray[i] + ", ");
+//        }
+//        String pizzas = pizza.toString();
+//        orderRepository.save(new CustomerOrder(urlSplit[0], price, pizzas.substring(0, pizzas.length() - 2)));
     }
-}
+
 
