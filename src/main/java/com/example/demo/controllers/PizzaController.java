@@ -36,7 +36,7 @@ public class PizzaController {
         return pizzaRepository.findAll();
     }
 
-
+    // Exempel: /addpizza/Namn-pris-Ost,ost,ost,ost
     @PutMapping(value = "/addpizza/{newPizza}")
     public void addPizza(@PathVariable String newPizza) {
         String[] split = newPizza.split("-");
@@ -51,6 +51,7 @@ public class PizzaController {
                 .collect(Collectors.toList());
     }
 
+    // Exempel: /editpizza/4-Champinjoner-Kantareller (id-gamla-nya)
     @PatchMapping(value = "/editpizza/{changeString}")
     public void changePizza(@PathVariable String changeString) {
         String[] urlSplit = changeString.split("-");
@@ -67,7 +68,14 @@ public class PizzaController {
         }
 
         for (int i = 0; i < ingredientsSplit.length; i++) {
-            ingredientsBuffer.append(ingredientsSplit[i]);
+
+            if(i < ingredientsSplit.length - 1) {
+                ingredientsBuffer.append(ingredientsSplit[i]);
+                ingredientsBuffer.append(", ");
+            }
+            else {
+                ingredientsBuffer.append(ingredientsSplit[i]);
+            }
         }
         String newIngredients = ingredientsBuffer.toString();
 
