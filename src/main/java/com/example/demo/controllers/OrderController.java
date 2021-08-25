@@ -19,7 +19,7 @@ public class OrderController {
         this.orderRepository = orderRepository;
     }
 
-
+    // Exempel: /orderpizza/telefonnummer-pizzaid,pizzaid,pizzaid
     @PostMapping(value = "/orderpizza/{pizzaOrder}")
     public void pizzaOrder(@PathVariable String pizzaOrder) {
         String[] urlSplit = pizzaOrder.split("-");
