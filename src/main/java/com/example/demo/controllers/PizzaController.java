@@ -64,8 +64,7 @@ public class PizzaController {
         }
         for (int i = 0; i < ingredientsSplit.length; i++) {
             if (i < ingredientsSplit.length - 1) {
-                ingredientsBuffer.append(ingredientsSplit[i]);
-                ingredientsBuffer.append(",");
+                ingredientsBuffer.append(ingredientsSplit[i]+",");
             } else {
                 ingredientsBuffer.append(ingredientsSplit[i]);
             }
