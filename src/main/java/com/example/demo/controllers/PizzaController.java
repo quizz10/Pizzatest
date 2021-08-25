@@ -62,11 +62,10 @@ public class PizzaController {
                 ingredientsSplit[i] = urlSplit[2];
             }
         }
-
         for (int i = 0; i < ingredientsSplit.length; i++) {
             if (i < ingredientsSplit.length - 1) {
                 ingredientsBuffer.append(ingredientsSplit[i]);
-                ingredientsBuffer.append(", ");
+                ingredientsBuffer.append(",");
             } else {
                 ingredientsBuffer.append(ingredientsSplit[i]);
             }
