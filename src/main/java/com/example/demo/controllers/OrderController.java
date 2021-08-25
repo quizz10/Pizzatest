@@ -30,10 +30,10 @@ public class OrderController {
         for (int i = 0; i < orderedPizzas.length; i++) {
             price += pizzaRepository.getById(Long.parseLong(orderedPizzas[i])).getPrice();
             pizzaArray[i] = pizzaRepository.getById(Long.parseLong(orderedPizzas[i])).getName();
-            pizza.append(pizzaArray[i] + ", ");
+            pizza.append(pizzaArray[i] + ",");
         }
         String pizzas = pizza.toString();
-        orderRepository.save(new CustomerOrder(urlSplit[0], price, pizzas.substring(0, pizzas.length() - 2)));
+        orderRepository.save(new CustomerOrder(urlSplit[0], price, pizzas.substring(0, pizzas.length() - 1)));
     }
 
 }
