@@ -13,11 +13,9 @@ public class PizzaController {
 
     private final PizzaRepository pizzaRepository;
 
-
     public PizzaController(PizzaRepository pizzaRepository) {
         this.pizzaRepository = pizzaRepository;
     }
-
 
     @GetMapping(value = "/pizzas/{id}")
     public @ResponseBody
@@ -29,7 +27,6 @@ public class PizzaController {
     public void deletePizza(@PathVariable long id) {
         pizzaRepository.deleteById(id);
     }
-
 
     @RequestMapping(value = "/pizzas", method = RequestMethod.GET)
     public List<Pizza> pizzas() {
@@ -58,7 +55,6 @@ public class PizzaController {
         Pizza modifiedPizza = pizzaRepository.getById(Long.parseLong(urlSplit[0]));
 
         String[] ingredientsSplit = modifiedPizza.getIngredients().split(",");
-
         StringBuffer ingredientsBuffer = new StringBuffer();
 
         for (int i = 0; i < ingredientsSplit.length; i++) {
@@ -68,12 +64,10 @@ public class PizzaController {
         }
 
         for (int i = 0; i < ingredientsSplit.length; i++) {
-
-            if(i < ingredientsSplit.length - 1) {
+            if (i < ingredientsSplit.length - 1) {
                 ingredientsBuffer.append(ingredientsSplit[i]);
                 ingredientsBuffer.append(", ");
-            }
-            else {
+            } else {
                 ingredientsBuffer.append(ingredientsSplit[i]);
             }
         }
